@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Index = () => {
+const Settings = () => {
     return (
         <div>
-           Überblick
+            
         </div>
     );
 };
 
-export default Index;
+export default Settings;

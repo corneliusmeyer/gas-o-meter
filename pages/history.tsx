@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Index = () => {
+const History = () => {
     return (
         <div>
-           Überblick
+            Historie
         </div>
     );
 };
 
-export default Index;
+export default History;
