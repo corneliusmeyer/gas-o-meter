@@ -5,7 +5,6 @@ const filename = 'storage.json';
 
 export const readSettings = () : Settings => {
     const data = readFileSync(filename, 'utf8');
-    console.log(data);
     return JSON.parse(data);
 }
 

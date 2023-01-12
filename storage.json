@@ -1,8 +1,1 @@
-{
-  "location": {
-    "aktive": false,
-    "long": "",
-    "lat": ""
-  },
-  "gasprice": 1.65
-}
+{"location":{"active":false,"long":7.8245735,"lat":51.6506111},"gasprice":2.65,"lastMeasurement":50.62}

@@ -28,7 +28,7 @@ const MenuItems = [
 
 const Sidebar = () => {
     return (
-        <aside className="bg-primary-color w-1/6 h-full flex-shrink-0 flex flex-col p-3">
+        <aside className="bg-primary-color h-max flex-shrink-0 flex flex-col p-3">
             <span className="text-3xl text-white text-center mb-3">Gas-o-meter</span>
             <hr className="border-gray-500" />
             {

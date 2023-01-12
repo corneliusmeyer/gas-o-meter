@@ -1,8 +1,8 @@
-export const getTemperatureForLocation_api = async (breitengrad: string, laengengrad: string) => {
+export const getTemperatureForLocation_api = async (lat: number, long: number) => {
     try {
         const url = "https://api.open-meteo.com/v1/forecast?" +
-            "latitude=" + breitengrad +
-            "&longitude=" + laengengrad +
+            "latitude=" + lat +
+            "&longitude=" + long +
             "&current_weather=true";
         const res = await fetch(url);
         const data = await res.json();
