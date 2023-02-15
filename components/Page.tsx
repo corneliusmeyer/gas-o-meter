@@ -1,0 +1,19 @@
+import React from 'react';
+
+
+type Props = {
+    title: string,
+    children: React.ReactNode;
+}
+
+const Page = (props: Props) => {
+    const {title, children} = props;
+    return (
+        <div className="flex flex-col p-3 h-full">
+            <h1 className="text-2xl text-black dark:text-white mb-5">{title}</h1>
+            {children}
+        </div>
+    );
+};
+
+export default Page;

@@ -1,13 +1,28 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Layout from "../components/Layout";
+import Setup from "./setup";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-  );
+interface MyAppProps extends AppProps {
+    isFirstVisit: boolean;
+}
+
+function MyApp({ Component, pageProps, isFirstVisit }: MyAppProps) {
+    if(isFirstVisit)
+        return <Setup />
+    else
+        return (
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        );
+}
+
+MyApp.getInitialProps = async (appContext: any) => {
+    const isFirstVisit = true;
+    const {Component, ctx} = appContext;
+    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+    return { pageProps, isFirstVisit };
 }
 
 export default MyApp
