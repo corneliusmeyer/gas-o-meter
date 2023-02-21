@@ -2,7 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Layout from "../components/Layout";
 import Setup from "./setup";
-import {readSettings} from "../services/StorageManager";
+import {readSettings} from "../utils/storagehelper";
 
 interface MyAppProps extends AppProps {
     isFirstVisit: boolean;

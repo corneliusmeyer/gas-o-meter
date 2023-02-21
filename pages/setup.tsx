@@ -64,11 +64,11 @@ const Setup:NextPage = () => {
         },
         {
             element: LocationScreen({locationSettingsHandler, passLocationSettings: settings.location}),
-            verification: null,
+            verification: () => !settings.location.active ? true : settings.location.lat > -1000 && settings.location.long > -1000,
         },
         {
             element: NotificationsScreen({notifySettingsHandler, passNotifySettings: settings.notifySettings}),
-            verification: null,
+            verification: () => !settings.notifySettings.active ? true : true,
         },
         {
             element: FinishScreen,

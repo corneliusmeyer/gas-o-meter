@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {writeSettings} from "../../services/StorageManager";
-import {isValidSettings} from "../../services/Validator";
+import {writeSettings} from "../../utils/storagehelper";
+import {isValidSettings} from "../../utils/validator";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if(req.method == 'POST') {

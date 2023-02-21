@@ -9,8 +9,8 @@ type Props = {
 const Page = (props: Props) => {
     const {title, children} = props;
     return (
-        <div className="flex flex-col p-3 h-full">
-            <h1 className="text-2xl text-black dark:text-white mb-5">{title}</h1>
+        <div className="flex flex-col sm:p-3 h-full">
+            <h1 className="text-xl md:text-2xl text-black dark:text-white mb-4">{title}</h1>
             {children}
         </div>
     );

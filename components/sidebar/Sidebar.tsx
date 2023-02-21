@@ -1,5 +1,5 @@
 import {usePathname} from "next/navigation";
-import {getFirstPartofURL} from "../../services/helper";
+import {getFirstPartofURL} from "../../utils/helper";
 import NavItem from "./NavItem";
 
 

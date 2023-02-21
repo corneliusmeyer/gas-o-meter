@@ -1,6 +1,6 @@
 import {readFileSync, writeFileSync} from 'fs';
 import {Settings} from "../models/Settings";
-import {isValidSettings} from "./Validator";
+import {isValidSettings} from "./validator";
 
 const filename = 'storage.json';
 
