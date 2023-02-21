@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Layout from "../components/Layout";
 import Setup from "./setup";
+import {readSettings} from "../services/StorageManager";
 
 interface MyAppProps extends AppProps {
     isFirstVisit: boolean;
@@ -19,10 +20,11 @@ function MyApp({ Component, pageProps, isFirstVisit }: MyAppProps) {
 }
 
 MyApp.getInitialProps = async (appContext: any) => {
-    const isFirstVisit = true;
+    const settings = readSettings();
+    const isFirstVisit = (settings == null) ? true : settings.isFirstVisit;
     const {Component, ctx} = appContext;
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
     return { pageProps, isFirstVisit };
 }
 
-export default MyApp
+export default MyApp;
