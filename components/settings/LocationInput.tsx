@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {LocationSettings} from "../../models/Settings";
+import {getCityNameForPosition, getUserLocation} from "../../utils/apis";
 
 type Props = {
     locationHandler: Function,
@@ -7,20 +8,65 @@ type Props = {
 }
 
 const LocationInput = ({locationHandler, passLocationSettings}: Props) => {
+    if (typeof window !== "undefined" && "navigator" in window && !("geolocation" in navigator)) {
+        return <p>Leider unterstützt Ihr Browser diese Funktion nicht.</p>;
+    }
 
     const [locationSettings, setLocationSettings] = useState<LocationSettings>(passLocationSettings);
-    const activeHandler = (active: boolean) => setLocationSettings(prevState => ({...prevState, active}));
+    const [isLoading, setLoading] = useState(false);
+    const [blocked, setBlocked] = useState(false);
+    const [city, setCity] = useState("");
 
-    useEffect(() => locationHandler(locationSettings), [locationSettings]);
+    const activeHandler = async (active: boolean) => {
+        if (active) {
+            setLoading(true);
+            const pos = await getUserLocation();
+            if(pos) {
+                setLocationSettings(prevState => ({...prevState, active:true}));
+                setLocationSettings(prevState => ({...prevState, location:pos}));
+            }
+            else {
+                setBlocked(true);
+                setLoading(false);
+            }
+        }
+        else {
+            setLocationSettings(prevState => ({...prevState, active:false}));
+        }
+    }
 
-    return (
+    useEffect(() => {
+        locationHandler(locationSettings);
+        if(locationSettings.active && locationSettings.location) {
+            const location = locationSettings.location;
+            getCityNameForPosition(location).then(city => {
+                if(city) {
+                    setCity("Gefundener Ort: " + city);
+                    console.log(city);
+                }
+                else setCity("Gefundene Position - Breitengrad: " + location.lat + " Längengrad: " + location.long);
+                setLoading(false);
+            })
+        }
+    }, [locationSettings]);
+
+    if(isLoading) return <p>Prüfe Standort...</p>
+    else if(blocked) {
+        return <p>Die Erlaubnis wurde nicht erteilt. Setze die Berechtigung manuell oder lade die Seite erneut.</p>
+    }
+    else return (
         <div className="flex flex-col">
-            <label className="text-xl">Temperaturservice aktivieren?</label>
+            <label className="text-lg">Temperaturservice aktivieren?</label>
             <input type="checkbox"
                    className="form-checkbox text-purple-600 rounded-full"
                    onChange={(e) => activeHandler(e.target.checked)}
                    checked={locationSettings.active}
             />
+            {
+                (locationSettings.active && locationSettings.location) ?
+                    <p>{city}</p>
+                    : null
+            }
         </div>
     );
 };

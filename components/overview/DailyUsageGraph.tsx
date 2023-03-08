@@ -1,23 +1,37 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
+import { Chart, registerables } from 'chart.js';
 import {Measurement} from "../../models/Measurement";
+import {getTimeOfDate} from "../../utils/helper";
 
 type Props = {
     data: Measurement[];
 }
 
 const DailyUsageGraph = ({data}:Props) => {
+    if(!data) return null;
+
+    Chart.register(...registerables);
+
+    const graphData = data.map((measurement) =>
+    {
+        return {
+            x: getTimeOfDate(new Date(measurement.time)),
+            y: measurement.value,
+        }
+    });
 
     const graphConfig = {
         datasets: [
             {
                 label: 'Gasnutzung',
-                data: data,
+                data: graphData,
                 fill: true,
                 tension: 0.1,
-            }
-        ]
+            },
+        ],
     }
+
 
     return (
         <Line data={graphConfig} />

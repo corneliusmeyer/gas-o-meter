@@ -6,7 +6,8 @@ import DailySavingTip from "../components/overview/DailySavingTip";
 import {SavingTip} from "../models/SavingTip";
 import {getSavingTipOfTheDay, today} from "../utils/helper";
 import {Measurement} from "../models/Measurement";
-import {readGasUsageInRange} from "../utils/influxdb";
+import DailyUsageGraph from "../components/overview/DailyUsageGraph";
+import {readGasUsageInRange} from "../utils/influxMethods";
 
 type OverviewPageProps = {
     dailyTip: SavingTip,
@@ -17,12 +18,15 @@ const Home:NextPage<OverviewPageProps> = (props) => {
     const {dailyTip, gasusage} = props;
     return (
         <Page title="Überblick">
-            <div className="grid grid-cols-2 h-full grid-rows-2">
-                <div className="bg-gray-100 m-2 p-3">1</div>
-                <div className="bg-gray-100 m-2 p-3 flex items-center">
-                    <CostsOverview today={1.28} yesterday={2.46} weekly={19.40} monthly={25.56} />
+            <div className="lg:grid grid-cols-2 h-full grid-rows-2">
+                <div className="bg-gray-100 m-2 p-3">
+                    <span>Heutige Gesamtkosten: <em>2.83€</em></span>
+                    <DailyUsageGraph data={gasusage} />
                 </div>
-                <div className="bg-gray-100 m-2 p-3 overflow-hidden">
+                <div className="bg-gray-100 m-2 p-3 flex items-center">
+
+                </div>
+                <div className="bg-gray-100 m-2 p-3">
                     <DailySavingTip tip={dailyTip} />
                 </div>
                 <div className="bg-gray-100 m-2 p-3 flex flex-col">

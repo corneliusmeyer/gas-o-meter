@@ -7,10 +7,14 @@ export type MQTT_Connection = {
     password?: string,
 }
 
-export type LocationSettings = {
-    active: boolean,
+export type Location = {
     long: number,
     lat: number,
+}
+
+export type LocationSettings = {
+    active: boolean,
+    location: Location,
 }
 
 export type NotifySettings = {

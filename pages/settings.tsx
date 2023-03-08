@@ -4,9 +4,10 @@ import Settingsfield from "../components/settings/Settingsfield";
 import ConnectionInput from "../components/settings/ConnectionInput";
 import {GetServerSideProps, NextPage} from "next";
 import {readSettings} from "../utils/storagehelper";
-import {MQTT_Connection, Settings} from "../models/Settings";
+import {LocationSettings, MQTT_Connection, Settings} from "../models/Settings";
 import {useRouter} from "next/router";
 import GaspriceInput from "../components/settings/GaspriceInput";
+import LocationInput from "../components/settings/LocationInput";
 
 type SettingsPageProps = {
     settings: Settings,
@@ -22,14 +23,18 @@ const Settings:NextPage<SettingsPageProps> = (props) => {
     const [settings, setSettings] = useState<Settings>(props.settings);
     const connectionHandler = (connection: MQTT_Connection) => setSettings(prevState => ({...prevState, connection}));
     const gaspriceHandler = (gasprice: number) => setSettings(prevState => ({...prevState, gasprice}));
+    const locationHandler = (location: LocationSettings) => setSettings(prevState => ({...prevState, location}));
 
     return (
         <Page title="Einstellungen">
-            <Settingsfield label="MQTT-Verbindung">
-                <ConnectionInput connectionHandler={connectionHandler} passConnection={settings.connection} />
-            </Settingsfield>
             <Settingsfield label="Gaspreis">
                 <GaspriceInput currentValue={settings.gasprice} priceHandler={gaspriceHandler} />
+            </Settingsfield>
+            <Settingsfield label="Temperaturservice">
+                <LocationInput locationHandler={locationHandler} passLocationSettings={settings.location} />
+            </Settingsfield>
+            <Settingsfield label="MQTT-Verbindung">
+                <ConnectionInput connectionHandler={connectionHandler} passConnection={settings.connection} />
             </Settingsfield>
         </Page>
     );

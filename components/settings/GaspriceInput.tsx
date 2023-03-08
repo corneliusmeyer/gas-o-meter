@@ -10,9 +10,8 @@ const GaspriceInput = ({priceHandler, currentValue} : Props) => {
         <div className="flex flex-col">
             <label>Gaspreis (ct / kwh)</label>
             <input type="number"
-                   pattern="[0-9]*"
                    name="gaspreis"
-                   className="text-black"
+                   className="border border-gray-400 rounded"
                    placeholder="0.71"
                    defaultValue={(currentValue!=-1 ? currentValue : "")}
                    onChange={(e) => priceHandler(Number(e.target.value))}

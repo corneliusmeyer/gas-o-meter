@@ -21,7 +21,7 @@ const ConnectionInput = ({connectionHandler, passConnection} : Props) => {
 
     return (
         <div className="flex flex-col">
-            <label className="text-xl">MQTT-Protokoll verwenden?</label>
+            <label className="text-lg">MQTT-Protokoll verwenden?</label>
             <input type="checkbox"
                    className="form-checkbox text-purple-600 rounded-full"
                    onChange={(e) => activeHandler(e.target.checked)}
@@ -32,21 +32,21 @@ const ConnectionInput = ({connectionHandler, passConnection} : Props) => {
                     <>
                     <label>IP-Adresse</label>
                     <input type="text"
-                           className="text-black"
+                           className="border border-gray-200 rounded"
                            placeholder="192.168.41"
                            defaultValue={(connection.ipAdress.length > 0) ? connection.ipAdress : ""}
                            onChange={(e) => ipAdressHandler(e.target.value)}
                     />
                     <label>Port</label>
                     <input type="text"
-                           className="text-black"
+                           className="border border-gray-200 rounded"
                            placeholder="8080"
                            defaultValue={(connection.port > 0) ? connection.port : ""}
                            onChange={(e) => portHandler(Number(e.target.value))}
                     />
                     <label>Topic</label>
                     <input type="text"
-                           className="text-black"
+                           className="border border-gray-200 rounded"
                            placeholder="Gasmessungen"
                            onChange={(e) => topicHandler(e.target.value)}
                            defaultValue={(connection.topic.length > 0) ? connection.topic : ""}

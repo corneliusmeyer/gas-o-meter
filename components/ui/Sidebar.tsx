@@ -17,6 +17,10 @@ const MenuItems = [
         link: '/analysis',
     },
     {
+        title: 'Verbrauchsgruppen',
+        link: '/analysis',
+    },
+    {
         title: 'Einstellungen',
         link: '/settings',
     },
