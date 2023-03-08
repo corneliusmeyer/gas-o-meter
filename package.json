@@ -6,11 +6,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.13",
     "@influxdata/influxdb-client": "^1.33.2",
+    "@types/react-datepicker": "^4.10.0",
     "chart.js": "^4.2.1",
     "next": "latest",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^4.10.0",
     "react-dom": "18.2.0",
     "swr": "^2.0.3"
   },

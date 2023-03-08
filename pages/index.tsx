@@ -4,10 +4,11 @@ import CostsOverview from "../components/overview/CostsOverview";
 import UsageComparison from "../components/overview/UsageComparison";
 import DailySavingTip from "../components/overview/DailySavingTip";
 import {SavingTip} from "../models/SavingTip";
-import {getSavingTipOfTheDay, today} from "../utils/helper";
+import {getSavingTipOfTheDay} from "../utils/helper";
 import {Measurement} from "../models/Measurement";
 import DailyUsageGraph from "../components/overview/DailyUsageGraph";
 import {readGasUsageInRange} from "../utils/influxMethods";
+import {today} from "../utils/DateRanges";
 
 type OverviewPageProps = {
     dailyTip: SavingTip,

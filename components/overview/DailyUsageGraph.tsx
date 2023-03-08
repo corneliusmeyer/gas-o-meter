@@ -2,7 +2,7 @@ import React from 'react';
 import {Line} from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import {Measurement} from "../../models/Measurement";
-import {getTimeOfDate} from "../../utils/helper";
+import {getTimeOfDate} from "../../utils/DateRanges";
 
 type Props = {
     data: Measurement[];
