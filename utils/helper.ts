@@ -24,6 +24,5 @@ export const fetcherPost = async (url: string, data: any) => {
 };
 
 export const getSavingTipOfTheDay = ():SavingTip => {
-    const tips = Object.values(SavingTipList);
-    return tips[0];
+    return SavingTipList[0].tips[0];
 }

@@ -17,12 +17,14 @@ const NotificationInput = ({notifySettingsHandler, passNotifySettings}: Props) =
 
     return (
         <div className="flex flex-col">
-            <label className="text-xl">Benachrichtigungen aktivieren</label>
-            <input type="checkbox"
-                   className="form-checkbox text-purple-600 rounded-full"
-                   onChange={(e) => activeHandler(e.target.checked)}
-                   checked={notifySettings.active}
-            />
+            <div className="flex flex-row">
+                <input type="checkbox"
+                       className="form-checkbox text-purple-600 rounded-full mx-4"
+                       onChange={(e) => activeHandler(e.target.checked)}
+                       checked={notifySettings.active}
+                />
+                <label className="text-lg">Benachrichtigungen aktivieren</label>
+            </div>
         </div>
     );
 };

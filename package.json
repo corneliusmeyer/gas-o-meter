@@ -8,6 +8,8 @@
   "dependencies": {
     "@headlessui/react": "^1.7.13",
     "@influxdata/influxdb-client": "^1.33.2",
+    "@types/chart.js": "^2.9.37",
+    "@types/react-chartjs-2": "^2.5.7",
     "@types/react-datepicker": "^4.10.0",
     "chart.js": "^4.2.1",
     "next": "latest",
@@ -15,7 +17,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^4.10.0",
     "react-dom": "18.2.0",
-    "swr": "^2.0.3"
+    "swr": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "18.11.3",

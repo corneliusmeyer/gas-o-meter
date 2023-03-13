@@ -4,7 +4,7 @@ import {DateRange} from "../models/DateRange";
 
 const influxDB = new InfluxDB({
     url: 'http://localhost:8086',
-    token: 'Bxeo5LlnxN7hnX1y-qXbqWYvNZop6vOmcPGSiY08-2G2H_977WoNWQhhupe8XR-2mkvMV-32sBrOFMUSbnzXQQ==',
+    token: '0NGsXo2ybBv1bE1sqF_lKaWhYPyJ6czpZHi-GH9nq_6JuKXW2FQjn1LSyl6Mgch22zeLJYVqTFm6PenjfNd1qw==',
 });
 
 export const writeMeasurementToInflux = (measurement: MeasurementInput):boolean => {

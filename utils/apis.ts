@@ -1,4 +1,4 @@
-import {Location} from "../models/Settings";
+import {Location, Settings} from "../models/Settings";
 
 function getUserLocationFromApi(): Promise<GeolocationPosition> {
     return new Promise((resolve, reject) => {
@@ -60,4 +60,12 @@ export const getTemperatureForLocation = async (lat: number, long: number) => {
     catch (err) {
         console.log(err);
     }
+}
+
+export const saveSettings = async (settings: Settings) => {
+    return await fetch('/api/settings', {
+        method: 'POST',
+        body: JSON.stringify(settings),
+        headers: {'Content-Type': 'application/json'},
+    });
 }

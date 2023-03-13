@@ -21,12 +21,14 @@ const ConnectionInput = ({connectionHandler, passConnection} : Props) => {
 
     return (
         <div className="flex flex-col">
-            <label className="text-lg">MQTT-Protokoll verwenden?</label>
-            <input type="checkbox"
-                   className="form-checkbox text-purple-600 rounded-full"
-                   onChange={(e) => activeHandler(e.target.checked)}
-                   checked={connection.active}
-            />
+            <div className="flex flex-row">
+                <input type="checkbox"
+                       className="form-checkbox text-purple-600 rounded-full mx-4"
+                       onChange={(e) => activeHandler(e.target.checked)}
+                       checked={connection.active}
+                />
+                <label className="text-lg">MQTT-Protokoll verwenden</label>
+            </div>
             {connection.active ?
                 (
                     <>

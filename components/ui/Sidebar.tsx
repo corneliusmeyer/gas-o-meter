@@ -18,7 +18,7 @@ const MenuItems = [
     },
     {
         title: 'Verbrauchsgruppen',
-        link: '/analysis',
+        link: '/uasagegroups',
     },
     {
         title: 'Einstellungen',

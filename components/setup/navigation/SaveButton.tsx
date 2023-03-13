@@ -1,5 +1,6 @@
 import React from 'react';
 import {Settings} from "../../../models/Settings";
+import {saveSettings} from "../../../utils/apis";
 
 type Props = {
     settings: Settings;
@@ -10,11 +11,7 @@ const SaveButton = ({settings, show} : Props) => {
 
     const handleAction = async () => {
         try {
-            const response = await fetch('/api/settings', {
-                method: 'POST',
-                body: JSON.stringify(settings),
-                headers: {'Content-Type': 'application/json'},
-            });
+            const response = await saveSettings(settings);
             if(response.ok) window.location.reload();
         }
         catch (err) {
