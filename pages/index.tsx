@@ -2,13 +2,13 @@ import type {GetServerSideProps, NextPage} from 'next'
 import Page from "../components/Page";
 import CostsOverview from "../components/overview/CostsOverview";
 import UsageComparison from "../components/overview/UsageComparison";
-import DailySavingTip from "../components/overview/DailySavingTip";
 import {SavingTip} from "../models/SavingTip";
 import {getSavingTipOfTheDay} from "../utils/helper";
 import {Measurement} from "../models/Measurement";
 import DailyUsageGraph from "../components/overview/DailyUsageGraph";
 import {readGasUsageInRange} from "../utils/influxMethods";
 import {today} from "../utils/DateRanges";
+import SavingTipCard from "../components/savingtips/SavingTipCard";
 
 type OverviewPageProps = {
     dailyTip: SavingTip,
@@ -21,20 +21,20 @@ const Home:NextPage<OverviewPageProps> = (props) => {
         <Page title="Überblick">
             <div className="lg:grid grid-cols-2 h-full grid-rows-2">
                 <div className="bg-gray-100 m-2 p-3">
-                    <span className="text-xl">Tagesverbrauch</span>
+                    <span className="text-xl mb-3">Tagesverbrauch</span>
                     <DailyUsageGraph data={gasusage} />
                 </div>
                 <div className="bg-gray-100 m-2 p-3 flex flex-col">
-                    <span className="text-xl">Kostenübersicht</span>
+                    <span className="text-xl mb-3">Kostenübersicht</span>
                     <CostsOverview today={1.28} yesterday={2.46} weekly={19.40} monthly={25.56} />
                 </div>
                 <div className="bg-gray-100 m-2 p-3 flex flex-col">
-                    <span className="text-xl">Spartipp des Tages</span>
+                    <span className="text-xl mb-3">Spartipp des Tages</span>
+                    <SavingTipCard savingTip={dailyTip} expanded={true} />
                 </div>
                 <div className="bg-gray-100 m-2 p-3 flex flex-col">
-                    <span className="text-xl">Status & Meldungen</span>
+                    <span className="text-xl mb-3">Aktueller Status</span>
                     <UsageComparison currentDiff={17} dailyDiff={-2} weeklyDiff={-3} />
-                    <hr className="mx-11 mb-4" />
                 </div>
             </div>
         </Page>

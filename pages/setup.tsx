@@ -22,8 +22,10 @@ const Setup:NextPage = () => {
     }
 
     const location:LocationSettings = {
-        long: -1,
-        lat: -1,
+        location: {
+            long: -1,
+            lat: -1,
+        },
         active: false,
     }
 
@@ -64,7 +66,7 @@ const Setup:NextPage = () => {
         },
         {
             element: LocationScreen({locationSettingsHandler, passLocationSettings: settings.location}),
-            verification: () => !settings.location.active ? true : settings.location.lat > -1000 && settings.location.long > -1000,
+            verification: () => !settings.location.active ? true : settings.location.location.lat > -1000 && settings.location.location.long > -1000,
         },
         {
             element: NotificationsScreen({notifySettingsHandler, passNotifySettings: settings.notifySettings}),

@@ -7,6 +7,9 @@ import DateRangePicker from "../components/ui/DateRangePicker";
 import LineChart from "../components/graphs/LineChart";
 import {readGasUsageInRange} from "../utils/influxMethods";
 import {NextPage} from "next";
+import ModalDelete from "../components/history/modals/ModalDelete";
+import ModalUsageGroup from "../components/history/modals/ModalUsageGroup";
+import {showSuccessToast} from "../utils/helper";
 
 type HistoryPageProps = {
     measurements: Measurement[];
@@ -16,6 +19,18 @@ const History:NextPage<HistoryPageProps> = ({measurements}) => {
     const [data, setData] = useState(measurements);
     const [selectedRange, setSelectedRange] = useState<DateRange>(today());
     const [renderCount, setRenderCount] = useState(0);
+
+    const [showUsageModal, setShowUsageModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const deleteModalHandler = (value: boolean) => {
+        setShowDeleteModal(false);
+        if(value) showSuccessToast("Die Daten wurden erfolgreich gelöscht.");
+    }
+    const usageModalHandler = (group?: string) => {
+        setShowUsageModal(false);
+        if(group) showSuccessToast("Dem Zeitraum wurde " + group + " zugewiesen.");
+    }
 
     const fetchData = async () => {
         const response = await fetch(`/api/measurements?start=${selectedRange.startDate}&end=${selectedRange.endDate}`);
@@ -32,6 +47,16 @@ const History:NextPage<HistoryPageProps> = ({measurements}) => {
     return (
         <Page title="Historie">
             <div className="flex flex-col h-full">
+                {showDeleteModal && (
+                    <ModalDelete
+                        callback={() => deleteModalHandler(true)}
+                    />
+                )}
+                {showUsageModal && (
+                    <ModalUsageGroup
+                        callback={usageModalHandler}
+                    />
+                )}
                 <DateRangePicker currentValue={selectedRange} callback={setSelectedRange}/>
                 <div className="flex-1">
                 {
@@ -41,9 +66,14 @@ const History:NextPage<HistoryPageProps> = ({measurements}) => {
                 </div>
                 {
                     data && data.length > 0 ? <div className="flex flex-row border border-solid border-gray-500 p-3 justify-around">
-                        <button className="hover:font-bold">Zeitraum analysieren</button>
-                        <button className="hover:font-bold">Verbrauchsgruppe hinzufügen</button>
-                        <button className="hover:font-bold">Daten für Zeitraum löschen</button>
+                        <a className="hover:font-bold"
+                           href={`/analysis?start=${selectedRange.startDate.toISOString()}&end=${selectedRange.endDate.toISOString()}`}
+                        >Zeitraum analysieren</a>
+                        <button className="hover:font-bold"
+                        onClick={() => setShowUsageModal(true)}
+                        >Verbrauchsgruppe hinzufügen</button>
+                        <button className="hover:font-bold"
+                        onClick={() => setShowDeleteModal(true)}>Daten für Zeitraum löschen</button>
                     </div> : null
                 }
             </div>

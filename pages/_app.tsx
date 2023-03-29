@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import Layout from "../components/Layout";
 import Setup from "./setup";
 import {readSettings} from "../utils/storagehelper";
+import {ToastContainer} from "react-toastify";
 
 interface MyAppProps extends AppProps {
     isFirstVisit: boolean;
@@ -15,6 +16,7 @@ function MyApp({ Component, pageProps, isFirstVisit }: MyAppProps) {
         return (
             <Layout>
                 <Component {...pageProps} />
+                <ToastContainer />
             </Layout>
         );
 }

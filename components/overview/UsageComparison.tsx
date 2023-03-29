@@ -22,7 +22,7 @@ const UsageComparison = ({currentDiff, dailyDiff, weeklyDiff} : Props) => {
     }
 
     return (
-        <div className="flex flex-col ml-5 mr-10">
+        <div className="flex flex-col ml-5 mr-10 h-full justify-evenly">
         {
             currentDiff >= 0
                 ?
@@ -40,9 +40,9 @@ const UsageComparison = ({currentDiff, dailyDiff, weeklyDiff} : Props) => {
         {
             weeklyDiff >= 0
                 ?
-                happyText("Letzte Woche wurde im Vergleich zu Vorletzter Woche "+weeklyDiff+"% Gas eingespart.")
+                happyText("Letzte Woche wurde im Vergleich zu vorletzter Woche "+weeklyDiff+"% Gas eingespart.")
                 :
-                sadText("Letzte Woche wurde im Vergleich zu Vorletzter Woche "+Math.abs(weeklyDiff)+"% mehr Gas verbraucht.")
+                sadText("Letzte Woche wurde im Vergleich zu vorletzter Woche "+Math.abs(weeklyDiff)+"% mehr Gas verbraucht.")
         }
         </div>
     );

@@ -1,0 +1,30 @@
+services:
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=secretpw123
+      - DOCKER_INFLUXDB_INIT_ORG=private
+      - DOCKER_INFLUXDB_INIT_BUCKET=gasometer
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=g0a1s2o3m4t5e6r7
+    restart: always
+    ports:
+      - 8086:8086
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+
+  gas-o-meter:
+    build: .
+    container_name: gas-o-meter
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=http://influxdb:8086
+    depends_on:
+      - influxdb
+
+volumes:
+  influxdb:

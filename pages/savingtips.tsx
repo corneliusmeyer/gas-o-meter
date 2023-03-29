@@ -4,6 +4,8 @@ import {SavingTipList} from "../utils/savingTipList";
 import Page from "../components/Page";
 import {SavingTip, TipCategory} from "../models/SavingTip";
 import SavingTipCard from "../components/savingtips/SavingTipCard";
+import ModalDelete from "../components/history/modals/ModalDelete";
+import SavingTipModal from "../components/savingtips/SavingTipModal";
 
 type SavingtipsPageProps = {
     savingTipList: TipCategory[],
@@ -20,17 +22,25 @@ const Savingtips:NextPage<SavingtipsPageProps> = (props) => {
             savingTipList.map((categorie, categorieIndex) => {
                return (
                 <div key={categorieIndex}>
-                    <h2>Spartipps für... {categorie.title}</h2>
-                    <div className="flex flex-row">
+                    {expandedCard != null && (
+                        <SavingTipModal
+                            tip={expandedCard}
+                            callback={() => setExpandedCard(null)}
+                        />
+                    )}
+                    <h2 className="text-lg">Spartipps für... {categorie.title}</h2>
+                    <div className="flex flex-row mb-3">
                     {
                         categorie.tips.map((tip, tipIndex) => {
-                            return <SavingTipCard
-                                    key={tipIndex}
-                                    savingTip={tip}
-                                    color={categorie.color}
-                                    expanded={false}
-                                    callback={() => setExpandedCard(tip)}
-                                />
+                            return <button
+                                    onClick={() => setExpandedCard(tip)}>
+                                    <SavingTipCard
+                                        key={tipIndex}
+                                        savingTip={tip}
+                                        color={categorie.color}
+                                        expanded={false}
+                                    />
+                                </button>
                             }
                         )
                     }
@@ -38,29 +48,6 @@ const Savingtips:NextPage<SavingtipsPageProps> = (props) => {
                 </div>
                )
             })
-        }
-        {
-            (expandedCard != null) ? (
-                <div className="fixed z-10 inset-0 overflow-y-auto">
-                    <div className="flex items-center justify-center min-h-screen">
-                        <div
-                            className="fixed inset-0 transition-opacity"
-                            aria-hidden="true"
-                        >
-                            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                        </div>
-                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-                            <div className="p-4">
-                                <SavingTipCard
-                                    savingTip={expandedCard}
-                                    expanded={true}
-                                />
-                                <button onClick={() => setExpandedCard(null)}>Schließen</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ) : null
         }
         </Page>
     );

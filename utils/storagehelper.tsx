@@ -2,7 +2,7 @@ import {readFileSync, writeFileSync} from 'fs';
 import {Settings} from "../models/Settings";
 import {isValidSettings} from "./validator";
 
-const filename = 'storage.json';
+const filename = 'Storage.json';
 
 export const readSettings = () : Settings | null => {
     const data = readFileSync(filename, 'utf8');

@@ -24,6 +24,14 @@ const LocationInput = ({locationHandler, passLocationSettings}: Props) => {
             if(pos) {
                 setLocationSettings(prevState => ({...prevState, active:true}));
                 setLocationSettings(prevState => ({...prevState, location:pos}));
+                getCityNameForPosition(pos).then(city => {
+                    if(city) {
+                        setCity("Gefundener Ort: " + city);
+                        console.log(city);
+                    }
+                    else setCity("Gefundene Position - Breitengrad: " + pos.lat + " Längengrad: " + pos.long);
+                    setLoading(false);
+                })
             }
             else {
                 setBlocked(true);
@@ -33,22 +41,8 @@ const LocationInput = ({locationHandler, passLocationSettings}: Props) => {
         else {
             setLocationSettings(prevState => ({...prevState, active:false}));
         }
-    }
-
-    useEffect(() => {
         locationHandler(locationSettings);
-        if(locationSettings.active && locationSettings.location) {
-            const location = locationSettings.location;
-            getCityNameForPosition(location).then(city => {
-                if(city) {
-                    setCity("Gefundener Ort: " + city);
-                    console.log(city);
-                }
-                else setCity("Gefundene Position - Breitengrad: " + location.lat + " Längengrad: " + location.long);
-                setLoading(false);
-            })
-        }
-    }, [locationSettings]);
+    }
 
     if(isLoading) return <p>Prüfe Standort...</p>
     else if(blocked) {

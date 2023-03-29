@@ -3,11 +3,12 @@ import {Measurement, MeasurementInput, MeasurementType} from "../models/Measurem
 import {DateRange} from "../models/DateRange";
 
 const influxDB = new InfluxDB({
-    url: 'http://localhost:8086',
-    token: '0NGsXo2ybBv1bE1sqF_lKaWhYPyJ6czpZHi-GH9nq_6JuKXW2FQjn1LSyl6Mgch22zeLJYVqTFm6PenjfNd1qw==',
+    url: 'http://influxdb:8086',
+    token: 'g0a1s2o3m4t5e6r7',
 });
 
 export const writeMeasurementToInflux = (measurement: MeasurementInput):boolean => {
+    console.log(measurement);
     try {
         const writeApi = influxDB.getWriteApi('private', 'gasometer');
         let point = new Point('measurement')

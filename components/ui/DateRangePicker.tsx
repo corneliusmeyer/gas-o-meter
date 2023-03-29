@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Listbox } from '@headlessui/react';
+import { Popover } from '@headlessui/react'
 import de from "date-fns/locale/de";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
@@ -13,19 +13,25 @@ type Props = {
 
 const DateRangePicker = ({ currentValue, callback }: Props) => {
     const options = [
+        "Benutzerdefiniert",
         "Letzte Stunde",
         "Heute",
         "Letzte Woche",
         "Dieser Monat",
         "Dieses Jahr",
-        "Letzte 365 Tage",
+        "Letzte 365 Tage"
     ];
-    const [selectedOption, setSelectedOption] = useState<string>(options[1]);
+
+    type optionType = typeof options[number];
+
+    const [selectedOption, setSelectedOption] = useState<optionType>(currentValue ? "Benuterdefiniert" : "Dieser Monat");
     const [selectedRange, setSelectedRange] = useState<DateRange>(currentValue);
 
     useEffect(() => {
         let newRange: DateRange;
         switch (selectedOption) {
+            case "Benutzerdefiniert":
+                return;
             case "Letzte Stunde":
                 newRange = lastHour();
                 break;
@@ -56,6 +62,7 @@ const DateRangePicker = ({ currentValue, callback }: Props) => {
             startDate: date,
             endDate: prevRange.endDate,
         }));
+        setSelectedOption('Benutzerdefiniert');
         callback(selectedRange);
     };
 
@@ -64,26 +71,38 @@ const DateRangePicker = ({ currentValue, callback }: Props) => {
             startDate: prevRange.startDate,
             endDate: date,
         }));
+        setSelectedOption('Benutzerdefiniert');
         callback(selectedRange);
     };
 
     return (
         <div className="flex flex-row border border-solid border-gray-500 p-3 justify-around">
-            <div className="flex flex-col">
-                <Listbox value={selectedOption} onChange={setSelectedOption}>
-                    <Listbox.Button className="border px-2 py-1 rounded">
+            <div className="relative">
+                <Popover>
+                    <Popover.Button
+                        className="bg-white text-gray-800 px-4 py-2 rounded-md shadow-sm hover:bg-gray-100">
                         {selectedOption}
-                    </Listbox.Button>
-                    <Listbox.Options className="border p-2 rounded">
-                        {options.map((option) => (
-                            <Listbox.Option key={option} value={option}>
-                                {option}
-                            </Listbox.Option>
-                        ))}
-                    </Listbox.Options>
-                </Listbox>
+                    </Popover.Button>
+
+                    <Popover.Panel className="absolute z-10 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                        <div className="py-1">
+                            {options
+                                .filter((option) => option !== "Benutzerdefiniert")
+                                .map((option) => (
+                                <button
+                                    key={option}
+                                    onClick={() => setSelectedOption(option)}
+                                    className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                >
+                                    {option}
+                                </button>
+                            ))}
+                        </div>
+                    </Popover.Panel>
+                </Popover>
             </div>
-            <div className="flex flex-row">
+
+    <div className="flex flex-row">
                 <label className="pr-7">Von</label>
                 <DatePicker
                     className="border border-solid border-gray-500 pl-2"
