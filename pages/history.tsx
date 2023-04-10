@@ -25,7 +25,7 @@ const History:NextPage<HistoryPageProps> = ({measurements}) => {
 
     const deleteModalHandler = (value: boolean) => {
         setShowDeleteModal(false);
-        if(value) showSuccessToast("Die Daten wurden erfolgreich gelöscht.");
+        if(value === true) showSuccessToast("Die Daten wurden erfolgreich gelöscht.");
     }
     const usageModalHandler = (group?: string) => {
         setShowUsageModal(false);
@@ -49,7 +49,7 @@ const History:NextPage<HistoryPageProps> = ({measurements}) => {
             <div className="flex flex-col h-full">
                 {showDeleteModal && (
                     <ModalDelete
-                        callback={() => deleteModalHandler(true)}
+                        callback={deleteModalHandler}
                     />
                 )}
                 {showUsageModal && (
@@ -58,14 +58,14 @@ const History:NextPage<HistoryPageProps> = ({measurements}) => {
                     />
                 )}
                 <DateRangePicker currentValue={selectedRange} callback={setSelectedRange}/>
-                <div className="flex-1">
+                <div className="max-h-fit h-fit my-2">
                 {
-                    data && data.length > 0 ? <LineChart data={data} />
-                        : <div>Es konnten keine Daten für den Zeitraum gefunden werden</div>
+                     data && data.length > 0 ? <LineChart data={data} />
+                          : <div>Es konnten keine Daten für den Zeitraum gefunden werden</div>
                 }
                 </div>
                 {
-                    data && data.length > 0 ? <div className="flex flex-row border border-solid border-gray-500 p-3 justify-around">
+                    data && data.length > 0 ? <div className="flex h-full flex-row border border-solid border-gray-500 p-2 justify-around">
                         <a className="hover:font-bold"
                            href={`/analysis?start=${selectedRange.startDate.toISOString()}&end=${selectedRange.endDate.toISOString()}`}
                         >Zeitraum analysieren</a>

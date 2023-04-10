@@ -19,6 +19,11 @@ export type LocationSettings = {
 
 export type NotifySettings = {
     active: boolean,
+    highUsage: boolean,
+    detection: boolean,
+    costsanalysis: boolean,
+    reviews: boolean,
+    errors: boolean,
 }
 
 export type Settings = {
@@ -28,4 +33,6 @@ export type Settings = {
     notifySettings: NotifySettings,
     gasprice: number,
     lastMeasurement: number,
+    yearlyUsage: number,
+    basiccharge: number,
 }

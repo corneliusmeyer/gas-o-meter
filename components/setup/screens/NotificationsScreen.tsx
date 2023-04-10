@@ -1,6 +1,6 @@
 import React from 'react';
 import {NotifySettings} from "../../../models/Settings";
-import NotificationInput from '../../settings/NotificationInput';
+import NotificationInput from '../../settings/core/NotificationInput';
 
 type Props = {
     notifySettingsHandler: Function,

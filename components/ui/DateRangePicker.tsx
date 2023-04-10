@@ -7,7 +7,7 @@ import {DateRange} from "../../models/DateRange";
 import {lastHour, lastWeek, lastYear, thisMonth, thisYear, today} from "../../utils/DateRanges";
 
 type Props = {
-    currentValue: DateRange;
+    currentValue?: DateRange;
     callback: (range: DateRange) => void;
 };
 
@@ -24,8 +24,8 @@ const DateRangePicker = ({ currentValue, callback }: Props) => {
 
     type optionType = typeof options[number];
 
-    const [selectedOption, setSelectedOption] = useState<optionType>(currentValue ? "Benuterdefiniert" : "Dieser Monat");
-    const [selectedRange, setSelectedRange] = useState<DateRange>(currentValue);
+    const [selectedOption, setSelectedOption] = useState<optionType>(currentValue ? "Benutzerdefiniert" : "Dieser Monat");
+    const [selectedRange, setSelectedRange] = useState<DateRange>(currentValue ? currentValue : thisMonth());
 
     useEffect(() => {
         let newRange: DateRange;
@@ -76,7 +76,7 @@ const DateRangePicker = ({ currentValue, callback }: Props) => {
     };
 
     return (
-        <div className="flex flex-row border border-solid border-gray-500 p-3 justify-around">
+        <div className="flex flex-row border border-solid border-gray-500 p-1 justify-around">
             <div className="relative">
                 <Popover>
                     <Popover.Button
@@ -102,10 +102,10 @@ const DateRangePicker = ({ currentValue, callback }: Props) => {
                 </Popover>
             </div>
 
-    <div className="flex flex-row">
+    <div className="flex flex-row items-center">
                 <label className="pr-7">Von</label>
                 <DatePicker
-                    className="border border-solid border-gray-500 pl-2"
+                    className="border border-solid border-gray-500 pl-2 pb-0"
                     selected={selectedRange.startDate}
                     onChange={handleStartDateChange}
                     dateFormat="dd.MM.yyyy HH:mm:ss"
@@ -114,7 +114,7 @@ const DateRangePicker = ({ currentValue, callback }: Props) => {
                     locale={de}
                 />
             </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row items-center">
                 <label className="pr-7">Bis</label>
                 <DatePicker
                     className="border border-solid border-gray-500 pl-2"

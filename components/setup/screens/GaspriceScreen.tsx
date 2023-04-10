@@ -1,5 +1,5 @@
 import React from 'react';
-import GaspriceInput from "../../settings/GaspriceInput";
+import GaspriceInput from "../../settings/core/GaspriceInput";
 
 type Props = {
     gaspriceHandler: Function;
@@ -12,7 +12,7 @@ const GaspriceScreen = ({gaspriceHandler, currentPrice} : Props) => () => {
             <h1 className="text-2xl md:text-4xl italic">Eingabe des Gaspreises</h1>
             <p className="text-lg md:text-2xl mt-10">
                 Damit Gas-o-meter Preisanalysen aufstellen kann, ist es notwendig, dass Sie ihren aktuellen Gaspreis eingeben.
-                Der Gaspreis ist netto im Format <em>cent / m^3</em> einzugeben.
+                Der Gaspreis ist netto im Format <em>cent / kwh</em> einzugeben.
                 Falls Sie Schwierigkeiten mit dem Format haben, nutzen Sie bitte einen Umrechner oder fragen Sie ihren Lieferanten.
             </p>
             <div className="mt-4 text-lg md:text-xl">

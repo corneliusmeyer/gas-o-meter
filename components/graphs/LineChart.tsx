@@ -29,6 +29,10 @@ const LineChart = ({data}:Props) => {
                 tension: 0.1,
             },
         ],
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        },
     }
     return (
         <Line data={graphConfig}/>

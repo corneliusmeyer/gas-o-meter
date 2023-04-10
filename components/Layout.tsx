@@ -7,7 +7,7 @@ const Layout = ({children}: {
     return (
         <div className="flex flex-row w-full p-0" >
             <Sidebar />
-            <main className="p-5 bg-secondary-color w-4/5 lg:w-5/6 h-full">
+            <main className="pt-4 pr-4 pl-4 pb-2 bg-secondary-color w-4/5 lg:w-5/6 h-full">
                 {children}
             </main>
         </div>

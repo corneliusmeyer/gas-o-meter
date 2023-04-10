@@ -3,7 +3,7 @@ import {Measurement, MeasurementInput, MeasurementType} from "../models/Measurem
 import {DateRange} from "../models/DateRange";
 
 const influxDB = new InfluxDB({
-    url: 'http://influxdb:8086',
+    url: 'http://localhost:8086',
     token: 'g0a1s2o3m4t5e6r7',
 });
 

@@ -2,7 +2,7 @@ import {TipCategory} from "../models/SavingTip";
 
 const heizen: TipCategory = {
     title: "Heizen",
-    color: "bg-gray-400",
+    color: "bg-gray-200",
     tips: [
         {
             "title": "Heizkörper entlüften",
@@ -29,7 +29,7 @@ const heizen: TipCategory = {
 
 const wohnen:TipCategory = {
     title: "Wohnen",
-    color: "bg-yellow-600",
+    color: "bg-gray-200",
     tips: [
         {
             "title": "Fenster und Türen dichthalten",

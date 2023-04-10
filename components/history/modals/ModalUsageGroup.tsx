@@ -17,14 +17,14 @@ const groups = [
 
 
 const ModalUsageGroup = ({callback}:Props) => {
-    const [selectedGroup, setSelectedGroup] = useState<null | string>(groups[0])
+    const [selectedGroup, setSelectedGroup] = useState<null | string>();
     const [query, setQuery] = useState('')
 
     const filteredGroups =
         query === ''
             ? groups
-            : groups.filter((person) => {
-                return person.toLowerCase().includes(query.toLowerCase());
+            : groups.filter((group) => {
+                return group.toLowerCase().includes(query.toLowerCase());
             });
 
     return (
@@ -69,13 +69,11 @@ const ModalUsageGroup = ({callback}:Props) => {
 
                     <div className="flex justify-end mt-4">
                         <button className="mr-2 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
-                                onClick={()=> {callback()}}>
+                                onClick={()=> callback()}>
                             Abbrechen
                         </button>
                         <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-400"
-                                onClick={() => {
-                                    callback(query);
-                                }}>
+                                onClick={() => callback(selectedGroup ? selectedGroup : query)}>
                             Hinzufügen
                         </button>
                     </div>

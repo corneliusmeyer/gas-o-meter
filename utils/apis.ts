@@ -1,5 +1,22 @@
 import {Location, Settings} from "../models/Settings";
 
+
+export function askNotificationPermission(): Promise<NotificationPermission> {
+    return new Promise((resolve, reject) => {
+        if (!('Notification' in window)) {
+            reject(new Error('Der Browser unterstüzt diese Funktion nicht.'));
+        } else if (Notification.permission === 'granted') {
+            resolve(Notification.permission);
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then((permission) => {
+                resolve(permission);
+            });
+        } else {
+            reject(new Error('Die Anfrage wurde abgelehnt'));
+        }
+    });
+}
+
 function getUserLocationFromApi(): Promise<GeolocationPosition> {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(

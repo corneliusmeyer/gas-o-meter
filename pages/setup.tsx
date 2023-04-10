@@ -31,9 +31,16 @@ const Setup:NextPage = () => {
 
     const notifySettings: NotifySettings = {
         active: false,
+        highUsage: false,
+        detection: false,
+        costsanalysis: false,
+        reviews: false,
+        errors: false,
     }
 
     const [settings, setSettings] = useState<Settings>({
+        basiccharge:-1,
+        yearlyUsage:-1,
         isFirstVisit: false,
         gasprice: -1,
         lastMeasurement: 0,

@@ -10,8 +10,9 @@ type Props = {
 const NextButton = (props: Props) => {
     const {active, currentScreen, setCurrentScreen, show} = props;
 
-    let style = "float-right bg-gray-400 py-1 px-3 hover:bg-gray-500 w-auto w-fit text-center ml-auto";
-    if(!active) style += "opacity-10 bg-gray-600 cursor-not-allowed";
+    let style = "float-right  py-1 px-3  w-auto w-fit text-center ml-auto ";
+    if(active) style += "bg-blue-400 hover:bg-blue-500"
+    else style += "opacity-80 bg-gray-600 cursor-not-allowed";
 
     if(!show) return null;
     return (

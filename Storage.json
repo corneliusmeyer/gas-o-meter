@@ -1,7 +1,9 @@
 {
+  "basiccharge": -1,
+  "yearlyUsage": -1,
   "isFirstVisit": false,
-  "gasprice": 2.45,
-  "lastMeasurement": 57.923,
+  "gasprice": 1.63,
+  "lastMeasurement": 0,
   "connection": {
     "active": false,
     "ipAdress": "",
@@ -9,11 +11,18 @@
     "topic": ""
   },
   "location": {
-    "long": -1,
-    "lat": -1,
+    "location": {
+      "long": -1,
+      "lat": -1
+    },
     "active": false
   },
   "notifySettings": {
-    "active": false
+    "active": false,
+    "highUsage": false,
+    "detection": false,
+    "costsanalysis": false,
+    "reviews": false,
+    "errors": false
   }
 }

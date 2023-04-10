@@ -20,7 +20,7 @@ const Home:NextPage<OverviewPageProps> = (props) => {
     return (
         <Page title="Überblick">
             <div className="lg:grid grid-cols-2 h-full grid-rows-2">
-                <div className="bg-gray-100 m-2 p-3">
+                <div className="bg-gray-100 m-2 p-3 max-h-fit">
                     <span className="text-xl mb-3">Tagesverbrauch</span>
                     <DailyUsageGraph data={gasusage} />
                 </div>

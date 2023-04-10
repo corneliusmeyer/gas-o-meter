@@ -22,7 +22,7 @@ const SaveButton = ({settings, show} : Props) => {
     if(!show) return null;
     return (
         <button
-            className="float-right bg-gray-400 py-1 px-3 hover:bg-gray-500 w-auto w-fit text-center"
+            className="float-right bg-blue-400 py-1 px-3 hover:bg-blue-500 w-auto w-fit text-center"
             onClick={() => handleAction()}
         >
             Speichern

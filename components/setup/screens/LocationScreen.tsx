@@ -1,5 +1,5 @@
 import {LocationSettings} from "../../../models/Settings";
-import LocationInput from "../../settings/LocationInput";
+import LocationInput from "../../settings/core/LocationInput";
 
 type Props = {
     locationSettingsHandler: Function,
