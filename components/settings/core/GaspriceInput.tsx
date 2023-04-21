@@ -8,7 +8,7 @@ type Props = {
 const GaspriceInput = ({priceHandler, currentValue} : Props) => {
     return (
         <div className="flex flex-col">
-            <label>Brutto Gaspreis (ct / kwh)</label>
+            <label>Netto Gaspreis (ct / kwh)</label>
             <input type="number"
                    name="gaspreis"
                    className="border border-gray-400 rounded mt-1 pl-3 max-w-min text-black"

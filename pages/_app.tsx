@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import Setup from "./setup";
 import {readSettings} from "../utils/storagehelper";
 import {ToastContainer} from "react-toastify";
+import Head from "next/head";
 
 interface MyAppProps extends AppProps {
     isFirstVisit: boolean;
@@ -14,15 +15,21 @@ function MyApp({ Component, pageProps, isFirstVisit }: MyAppProps) {
         return <Setup />
     else
         return (
-            <Layout>
-                <Component {...pageProps} />
-                <ToastContainer />
-            </Layout>
+            <>
+                <Head>
+                    <title>Gas-o-meter</title>
+                    <meta name="description" content="Gas-o-meter von Cornelius Meyer" />
+                </Head>
+                <Layout>
+                    <Component {...pageProps} />
+                    <ToastContainer />
+                </Layout>
+            </>
         );
 }
 
 MyApp.getInitialProps = async (appContext: any) => {
-    const settings = readSettings();
+    const settings = await readSettings();
     const isFirstVisit = (settings == null) ? true : settings.isFirstVisit;
     const {Component, ctx} = appContext;
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};

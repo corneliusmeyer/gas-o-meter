@@ -1,25 +1,18 @@
 import React, {useState} from 'react';
 import Page from "../components/Page";
-import Settingsfield from "../components/settings/Settingsfield";
-import ConnectionInput from "../components/settings/core/ConnectionInput";
-import {GetServerSideProps, NextPage} from "next";
+import {GetServerSideProps, GetServerSidePropsContext, NextPage} from "next";
 import {readSettings} from "../utils/storagehelper";
 import {LocationSettings, MQTT_Connection, NotifySettings, Settings} from "../models/Settings";
-import GaspriceInput from "../components/settings/core/GaspriceInput";
-import LocationInput from "../components/settings/core/LocationInput";
-import NotificationInput from "../components/settings/core/NotificationInput";
-import CostAnalysisInput from "../components/settings/core/CostAnalysisInput";
-import ManualGasCountInput from "../components/settings/core/ManualGasCountInput";
 import {useRouter} from "next/router";
 import {showErrorToast, showSuccessToast, showWarningToast} from "../utils/helper";
 import {saveSettings} from "../utils/apis";
-import {usage} from "browserslist";
 import ConnectionSetting from "../components/settings/ConnectionSetting";
 import LocationSetting from "../components/settings/LocationSetting";
 import NotificationsSetting from "../components/settings/NotificationsSetting";
 import CostAnalysisSetting from "../components/settings/CostAnalysisSetting";
 import CostInputSetting from "../components/settings/CostInputSetting";
 import ManualGasCountSetting from "../components/settings/ManualGasCountSetting";
+import {isValidConnection, isValidGaspric, isValidLocation, isValidMeasurement} from "../utils/validator";
 
 type SettingsPageProps = {
     settings: Settings,
@@ -50,9 +43,12 @@ const Settings:NextPage<SettingsPageProps> = (props) => {
 
     const saveHandler = async () => {
         if(gasvalue !== settings.lastMeasurement) {
-            const result = await fetch('http://localhost:3000/api/addMeasurement?value='+gasvalue);
+            if(!isValidMeasurement(gasvalue, settings.lastMeasurement)) {
+                showErrorToast("Der neue Zählerstand muss größer " + settings.lastMeasurement+ " sein.");
+                return;
+            }
+            const result = await fetch('api/addMeasurement?value='+gasvalue);
             if(result.ok) {
-                showSuccessToast('Der Gasstand wurde erfolgreich geschrieben.');
                 settings.lastMeasurement = gasvalue;
             }
             else {
@@ -65,9 +61,16 @@ const Settings:NextPage<SettingsPageProps> = (props) => {
             showWarningToast('Es wurden keine Änderungen zum Speichern vorgenommen.');
             return;
         }
-        if(settings.connection.active
-            && (settings.connection.topic.length < 2 || settings.connection.ipAdress.length < 5 || settings.connection.port < 0)) {
+        if(!isValidConnection(settings.connection)) {
             showErrorToast("Die eingegebene Verbindung ist nicht valide. Bitte überprüfen Sie die Verbindungseingaben.");
+            return;
+        }
+        if(!isValidLocation(settings.location)) {
+            showErrorToast("Der eingegebene Ort ist fehlerhaft.");
+            return;
+        }
+        if(!isValidGaspric(settings.gasprice)) {
+            showErrorToast("Der eingegebene Gaspreis ist nicht valide");
             return;
         }
         if ((settings.yearlyUsage !== -1 || settings.basiccharge !== -1) && (settings.yearlyUsage < 1 || settings.basiccharge < 1)) {
@@ -87,7 +90,8 @@ const Settings:NextPage<SettingsPageProps> = (props) => {
             {
                didChanges ? <span className="text-red-400">Es gibt ungespeicherte Änderungen.</span> : null
             }
-            <ManualGasCountSetting currentValue={gasvalue+0.01} callback={setGasvalue} />
+            <ManualGasCountSetting currentValue={gasvalue+0.01}
+                                   callback={(value:number) => {setGasvalue(value); setDidChanges(true)}} />
             <CostInputSetting currentValue={settings.gasprice} callback={gaspriceHandler} />
             <CostAnalysisSetting currentBaseCharge={settings.basiccharge} currentYearlyUsage={settings.yearlyUsage}
                               baseCallback={baseChargeHandler}  usageCallback={yearlyUsageHandler} />
@@ -110,8 +114,8 @@ const Settings:NextPage<SettingsPageProps> = (props) => {
     );
 };
 
-export const getServerSideProps = () => {
-    const settings = readSettings();
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+    const settings = await readSettings();
     return { props: { settings } };
 };
 

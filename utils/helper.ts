@@ -11,19 +11,6 @@ export const getFirstPartofURL = (url: string | null) : string => {
     return "/";
 }
 
-export const fetcherGet = (url: string) => fetch(url).then((res) => res.json());
-
-export const fetcherPost = async (url: string, data: any) => {
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-    return response.json();
-};
-
 export const getSavingTipOfTheDay = ():SavingTip => {
     return SavingTipList[0].tips[0];
 }
@@ -45,3 +32,4 @@ export function showWarningToast(message: string) {
         position: toast.POSITION.TOP_RIGHT
     })
 }
+

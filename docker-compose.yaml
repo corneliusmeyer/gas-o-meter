@@ -23,8 +23,7 @@ services:
       - 3000:3000
     environment:
       - DATABASE_URL=http://influxdb:8086
+    volumes:
+      - ./config:/app/config
     depends_on:
       - influxdb
-
-volumes:
-  influxdb:

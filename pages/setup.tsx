@@ -11,6 +11,7 @@ import ReturnButton from "../components/setup/navigation/ReturnButton";
 import NextButton from "../components/setup/navigation/NextButton";
 import SaveButton from "../components/setup/navigation/SaveButton";
 import {LocationSettings, MQTT_Connection, NotifySettings, Settings} from "../models/Settings";
+import {ToastContainer} from "react-toastify";
 
 const Setup:NextPage = () => {
 
@@ -77,7 +78,7 @@ const Setup:NextPage = () => {
         },
         {
             element: NotificationsScreen({notifySettingsHandler, passNotifySettings: settings.notifySettings}),
-            verification: () => !settings.notifySettings.active ? true : true,
+            verification: () => true,
         },
         {
             element: FinishScreen,
@@ -115,6 +116,7 @@ const Setup:NextPage = () => {
                 />
                 <SaveButton settings={settings} show={currentScreen == screenNum-1} />
             </div>
+            <ToastContainer />
         </div>
     );
 };

@@ -3,12 +3,14 @@ import {Measurement} from "../../models/Measurement";
 import {Line} from "react-chartjs-2";
 import {getTimeOfDate} from "../../utils/DateRanges";
 import { Chart, registerables } from 'chart.js/auto';
+import {DateRange} from "../../models/DateRange";
 
 type Props = {
     data: Measurement[];
+    dateRange: DateRange,
 }
 
-const LineChart = ({data}:Props) => {
+const LineChart = ({data, dateRange}:Props) => {
     if(!data) return (<div>Es gibt keine Daten.</div>);
     Chart.register(...registerables);
 
@@ -32,11 +34,18 @@ const LineChart = ({data}:Props) => {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            scales: {
+                x: {
+                    min: dateRange.startDate.getTime(),
+                    max: dateRange.endDate.getTime(),
+                }
+            }
         },
     }
     return (
         <Line data={graphConfig}/>
     );
 };
+
 
 export default LineChart;

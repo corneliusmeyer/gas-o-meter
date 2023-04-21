@@ -3,7 +3,7 @@
   "yearlyUsage": -1,
   "isFirstVisit": false,
   "gasprice": 1.63,
-  "lastMeasurement": 0,
+  "lastMeasurement": 5000.35,
   "connection": {
     "active": false,
     "ipAdress": "",
@@ -12,10 +12,10 @@
   },
   "location": {
     "location": {
-      "long": -1,
-      "lat": -1
+      "long": 7.8245416,
+      "lat": 51.6505752
     },
-    "active": false
+    "active": true
   },
   "notifySettings": {
     "active": false,

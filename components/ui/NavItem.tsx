@@ -13,7 +13,7 @@ const NavItem = (props: Props) => {
     let style = "px-0 py-2 mx-0.5 my-1 text-xs md:text-l xl:text-base p-12 rounded-md text-white text-center";
     if(selected) style += " bg-blue-600";
     return (
-        <Link className={style} href={link}>
+        <Link className={style} href={link} prefetch>
             {title}
         </Link>
     );

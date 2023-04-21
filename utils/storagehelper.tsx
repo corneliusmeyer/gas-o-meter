@@ -2,9 +2,9 @@ import {readFileSync, writeFileSync} from 'fs';
 import {Settings} from "../models/Settings";
 import {isValidSettings} from "./validator";
 
-const filename = 'Storage.json';
+const filename = 'config/Storage.json';
 
-export const readSettings = () : Settings | null => {
+export const readSettings = async () : Promise<Settings | null> => {
     const data = readFileSync(filename, 'utf8');
     if(data) {
         const settings = JSON.parse(data);

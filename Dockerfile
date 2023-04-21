@@ -1,8 +1,9 @@
 FROM node:14-alpine
-WORKDIR /
+RUN mkdir -p /app/config
+WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 EXPOSE 3000
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]

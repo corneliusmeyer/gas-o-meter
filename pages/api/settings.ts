@@ -2,7 +2,7 @@ import {NextApiRequest, NextApiResponse} from "next";
 import {readSettings, writeSettings} from "../../utils/storagehelper";
 import {isValidSettings} from "../../utils/validator";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if(req.method === 'POST') {
         const body = req.body;
          if(isValidSettings(body)) {
@@ -12,7 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
          }
     }
     else if(req.method === 'GET') {
-        const settings = readSettings();
+        const settings = await readSettings();
         res.status(200).json(settings);
         return;
     }

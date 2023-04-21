@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {MQTT_Connection, Settings} from "../../../models/Settings";
 import {callback} from "chart.js/helpers";
 import {Switch} from "@headlessui/react";
-import {showSuccessToast} from "../../../utils/helper";
+import {showErrorToast, showSuccessToast, showWarningToast} from "../../../utils/helper";
+import {testMQTTConnection} from "../../../utils/mqtt";
 
 type Props = {
     connectionHandler: Function,
@@ -74,7 +75,11 @@ const ConnectionInput = ({connectionHandler, passConnection} : Props) => {
                         />
                         <button
                             className="mt-4 max-w-fit hover:bg-gray-100 py-2 px-2 border rounded"
-                            onClick={() => showSuccessToast('Die Verbindung war erfolgreich')}
+                            onClick={async () => {
+                                if(await testMQTTConnection(connection))
+                                    showSuccessToast('Die Verbindung ist erfolgreich.');
+                                else showErrorToast('Die Verbindung konnte nicht hergestellt werden.');
+                            }}
                         >Verbindung testen</button>
                     </div>
                 ) : null

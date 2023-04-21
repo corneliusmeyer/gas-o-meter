@@ -5,10 +5,11 @@ import UsageComparison from "../components/overview/UsageComparison";
 import {SavingTip} from "../models/SavingTip";
 import {getSavingTipOfTheDay} from "../utils/helper";
 import {Measurement} from "../models/Measurement";
-import DailyUsageGraph from "../components/overview/DailyUsageGraph";
 import {readGasUsageInRange} from "../utils/influxMethods";
 import {today} from "../utils/DateRanges";
 import SavingTipCard from "../components/savingtips/SavingTipCard";
+import LineChart from "../components/graphs/LineChart";
+import {GetServerSidePropsContext} from "next";
 
 type OverviewPageProps = {
     dailyTip: SavingTip,
@@ -22,7 +23,7 @@ const Home:NextPage<OverviewPageProps> = (props) => {
             <div className="lg:grid grid-cols-2 h-full grid-rows-2">
                 <div className="bg-gray-100 m-2 p-3 max-h-fit">
                     <span className="text-xl mb-3">Tagesverbrauch</span>
-                    <DailyUsageGraph data={gasusage} />
+                    <LineChart data={gasusage} dateRange={today()} />
                 </div>
                 <div className="bg-gray-100 m-2 p-3 flex flex-col">
                     <span className="text-xl mb-3">Kostenübersicht</span>
@@ -41,7 +42,7 @@ const Home:NextPage<OverviewPageProps> = (props) => {
     )
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
     const tip = getSavingTipOfTheDay();
     const gasusage = await readGasUsageInRange(today());
     return {props: {dailyTip: tip, gasusage: gasusage}}

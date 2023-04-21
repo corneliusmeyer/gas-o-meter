@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {GetServerSideProps, NextPage} from "next";
+import {GetServerSideProps, GetServerSidePropsContext, NextPage} from "next";
 import {SavingTipList} from "../utils/savingTipList";
 import Page from "../components/Page";
 import {SavingTip, TipCategory} from "../models/SavingTip";
@@ -53,7 +53,8 @@ const Savingtips:NextPage<SavingtipsPageProps> = (props) => {
     );
 };
 
-export const getServerSideProps = () => {
+export const getServerSideProps = (context: GetServerSidePropsContext) => {
+    context.res.setHeader('Cache-Control', 'public, max-age=9999');
     return {props: {savingTipList: SavingTipList}}
 }
 

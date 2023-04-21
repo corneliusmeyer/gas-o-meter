@@ -6,10 +6,12 @@ import Page from "../components/Page";
 import DateRangePicker from "../components/ui/DateRangePicker";
 import LineChart from "../components/graphs/LineChart";
 import {readGasUsageInRange} from "../utils/influxMethods";
-import {NextPage} from "next";
+import {GetServerSidePropsContext, NextPage} from "next";
 import ModalDelete from "../components/history/modals/ModalDelete";
 import ModalUsageGroup from "../components/history/modals/ModalUsageGroup";
-import {showSuccessToast} from "../utils/helper";
+import {showErrorToast, showSuccessToast} from "../utils/helper";
+import {deleteValuesInRange, findMaximumGascount} from "../utils/influxdb";
+import {saveSettings} from "../utils/apis";
 
 type HistoryPageProps = {
     measurements: Measurement[];
@@ -23,18 +25,35 @@ const History:NextPage<HistoryPageProps> = ({measurements}) => {
     const [showUsageModal, setShowUsageModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    const deleteModalHandler = (value: boolean) => {
+    const deleteModalHandler = async (consent: boolean) => {
         setShowDeleteModal(false);
-        if(value === true) showSuccessToast("Die Daten wurden erfolgreich gelöscht.");
+        if(consent === true) {
+            const result = await deleteValuesInRange(selectedRange);
+            if(result) {
+                const max = await findMaximumGascount();
+                const settingsreq = await fetch('/api/settings');
+                const settings = await settingsreq.json();
+                if(settings) {
+                    settings.lastMeasurement = max;
+                    await saveSettings(settings);
+                }
+                setSelectedRange(selectedRange);
+                showSuccessToast('Die Daten wurden für den Zeitraum erfolgreich gelöscht');
+            }
+            else showErrorToast('Die Daten konnten für den Zeitraum nicht gelöscht werden');
+        }
     }
+
     const usageModalHandler = (group?: string) => {
         setShowUsageModal(false);
         if(group) showSuccessToast("Dem Zeitraum wurde " + group + " zugewiesen.");
     }
 
     const fetchData = async () => {
-        const response = await fetch(`/api/measurements?start=${selectedRange.startDate}&end=${selectedRange.endDate}`);
-        setData(await response.json());
+        const response = await fetch(`/api/measurements?start=${selectedRange.startDate.toISOString()}`+
+                                                                `&end=${selectedRange.endDate.toISOString()}`);
+        const result = await response.json();
+        setData(result);
     }
 
     useEffect(() => {
@@ -60,7 +79,7 @@ const History:NextPage<HistoryPageProps> = ({measurements}) => {
                 <DateRangePicker currentValue={selectedRange} callback={setSelectedRange}/>
                 <div className="max-h-fit h-fit my-2">
                 {
-                     data && data.length > 0 ? <LineChart data={data} />
+                     data && data.length > 0 ? <LineChart data={data} dateRange={selectedRange} />
                           : <div>Es konnten keine Daten für den Zeitraum gefunden werden</div>
                 }
                 </div>
@@ -81,7 +100,7 @@ const History:NextPage<HistoryPageProps> = ({measurements}) => {
     );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
     const measurements = await readGasUsageInRange(today());
     return {props: {measurements}};
 }
