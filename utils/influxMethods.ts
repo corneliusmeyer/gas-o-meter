@@ -7,7 +7,7 @@ export const readTemperatureInRange = (range: DateRange) => readMeasurementsInRa
 
 export const readGasCountInRange = (range: DateRange) => readMeasurementsInRange(range, "gascount");
 
-export const readGasUsageInRange = (range: DateRange) => readMeasurementsInRange(range, "gasusage");
+export const readGasUsageInRange = async (range: DateRange) => await readMeasurementsInRange(range, "gasusage");
 
 export const getAverageGasUsageForTimeAndTemperature = (time: Date, temp: number) => {
 

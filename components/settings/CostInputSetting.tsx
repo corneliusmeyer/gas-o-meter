@@ -30,9 +30,10 @@ const CostInputSetting = ({currentValue, callback}:Props) => {
                     {showInfo && (
                         <Disclosure.Panel>
                             <p className="max-w-5xl pb-3">
-                                Hier kann der aktuelle Gaspreis geändert werden. Der Gaspreis ist in der Einheit cent
-                                pro Kwh (Brutto) einzugeben und wird für die Analysen benötigt. Der Gaspreis wird rückwirkend gespeichert
-                                Neueingaben werden für die zukünftigen Gasmessungen in Kraft treten.
+                                Hier kann der aktuelle Gaspreis geändert werden. Dieser Preis bezieht sich auf den Arbeitspreis
+                                und ist netto in <em>€ / Kubikmeter</em> einzutragen. Ein neuer Gaspreis bezieht sich nur auf neu
+                                hinzugefügte Messungen. Falls Sie Schwierigkeiten bei der Ermittlung haben, nutzen sie Online-Tools
+                                oder fragen ihren Gasversorger.
                             </p>
                         </Disclosure.Panel>
                     )}

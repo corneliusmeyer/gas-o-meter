@@ -6,17 +6,16 @@ import {Settings} from "../../models/Settings";
 import {getTemperatureForLocation} from "../../utils/apis";
 import {isValidMeasurement} from "../../utils/validator";
 
-function applyTemperature(settings: Settings) : number | undefined {
+async function applyTemperature(settings: Settings) : Promise<number | undefined> {
     if(settings.location && settings.location.active) {
         const lat = settings.location.location.lat;
         const long = settings.location.location.long;
         if(lat && long) {
-            getTemperatureForLocation(lat, long).then((temp:number) => {
-                if(Number.isFinite(temp))
-                    return temp;
-            });
+            const temp = await getTemperatureForLocation(lat, long);
+            if(temp && Number.isFinite(temp)) {
+                return temp;
+            }
         }
-        return undefined;
     }
     return undefined;
 }
@@ -30,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             gasprice: price,
             gascount: val,
         };
-        measurement.temperature = applyTemperature(settings);
+        measurement.temperature = await applyTemperature(settings);
         if(writeMeasurementToInflux(measurement)) {
             settings.lastMeasurement = val;
             writeSettings(settings);

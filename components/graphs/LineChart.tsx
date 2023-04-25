@@ -4,6 +4,7 @@ import {Line} from "react-chartjs-2";
 import {getTimeOfDate} from "../../utils/DateRanges";
 import { Chart, registerables } from 'chart.js/auto';
 import {DateRange} from "../../models/DateRange";
+import {rangeToUnit} from "../../utils/helper";
 
 type Props = {
     data: Measurement[];
@@ -12,6 +13,7 @@ type Props = {
 
 const LineChart = ({data, dateRange}:Props) => {
     if(!data) return (<div>Es gibt keine Daten.</div>);
+    const unit = rangeToUnit(dateRange);
     Chart.register(...registerables);
 
     const graphData = data.map((measurement) =>
@@ -35,10 +37,21 @@ const LineChart = ({data, dateRange}:Props) => {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                x: {
+                xAxis: {
+                    type: 'time',
+                    stepSize: 1,
+                    time: {
+                        unit: unit,
+                        displayFormats: {
+                            hour: 'MMM DD HH:mm',
+                            day: 'MMM DD',
+                            week: 'll',
+                            month: 'MMM YYYY',
+                        }
+                    },
                     min: dateRange.startDate.getTime(),
                     max: dateRange.endDate.getTime(),
-                }
+                },
             }
         },
     }

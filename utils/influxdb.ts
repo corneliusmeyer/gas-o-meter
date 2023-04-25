@@ -3,7 +3,7 @@ import {Measurement, MeasurementInput, MeasurementType} from "../models/Measurem
 import {DateRange} from "../models/DateRange";
 
 const influxDB = new InfluxDB({
-    url: 'http://influxdb:8086',
+    url: 'http://localhost:8086',
     token: 'g0a1s2o3m4t5e6r7',
 });
 
@@ -13,8 +13,9 @@ export const writeMeasurementToInflux = (measurement: MeasurementInput):boolean 
         let point = new Point('measurement')
             .floatField('gascount', measurement.gascount)
             .floatField('gasprice', measurement.gasprice);
-        if(measurement.temperature)
+        if(measurement.temperature){
             point.floatField('temperature', measurement.temperature);
+        }
         writeApi.writePoint(point);
         writeApi.close();
         return true;
@@ -52,7 +53,7 @@ export const readMeasurementsInRange = async (range:DateRange, type: Measurement
 }
 
 export const deleteValuesInRange = async (range: DateRange): Promise<boolean> => {
-    const url = 'http://influxdb:8086/api/v2/delete?org=private&bucket=gasometer';
+    const url = 'http://localhost:8086/api/v2/delete?org=private&bucket=gasometer';
     const options = {
         method: 'POST',
         headers: {

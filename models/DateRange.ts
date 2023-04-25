@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export class DateRange {
     startDate: Date;
     endDate: Date;

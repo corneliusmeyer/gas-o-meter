@@ -34,7 +34,7 @@ const Settings:NextPage<SettingsPageProps> = (props) => {
         setDidChanges(true);
     }
 
-    const yearlyUsageHandler = (yearlyUsage: number) => componentHandler(prevState => ({...prevState, yearlyUsage}));
+    const yearlyUsageHandler = (yearlyUsage: number) => {componentHandler(prevState => ({...prevState, yearlyUsage}))};
     const baseChargeHandler = (basiccharge: number) => componentHandler(prevState => ({...prevState, basiccharge}));
     const connectionHandler = (connection: MQTT_Connection) => componentHandler(prevState => ({...prevState, connection}));
     const gaspriceHandler = (gasprice: number) => componentHandler(prevState => ({...prevState, gasprice}));

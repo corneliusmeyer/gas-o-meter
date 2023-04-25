@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Popover } from '@headlessui/react'
 import de from "date-fns/locale/de";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
+import DatePicker, {registerLocale} from "react-datepicker";
 import {DateRange} from "../../models/DateRange";
 import {lastHour, lastWeek, lastYear, thisMonth, thisYear, today} from "../../utils/DateRanges";
 
@@ -12,6 +12,7 @@ type Props = {
 };
 
 const DateRangePicker = ({ currentValue, callback }: Props) => {
+    registerLocale("de", de);
     const options = [
         "Benutzerdefiniert",
         "Letzte Stunde",
@@ -67,6 +68,8 @@ const DateRangePicker = ({ currentValue, callback }: Props) => {
     };
 
     const handleEndDateChange = (date: Date) => {
+        console.log("enddate: " +date);
+        console.log("eigentlich: " + date)
         setSelectedRange((prevRange) => ({
             startDate: prevRange.startDate,
             endDate: date,
@@ -111,7 +114,7 @@ const DateRangePicker = ({ currentValue, callback }: Props) => {
                     dateFormat="dd.MM.yyyy HH:mm:ss"
                     timeFormat="HH:mm"
                     showTimeSelect
-                    locale={de}
+                    locale="de"
                 />
             </div>
             <div className="flex flex-row items-center">
@@ -123,7 +126,7 @@ const DateRangePicker = ({ currentValue, callback }: Props) => {
                     dateFormat="dd.MM.yyyy HH:mm:ss"
                     timeFormat="HH:mm"
                     showTimeSelect
-                    locale={de}
+                    locale="de"
                 />
             </div>
         </div>

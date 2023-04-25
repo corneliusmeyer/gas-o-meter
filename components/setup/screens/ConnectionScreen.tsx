@@ -12,7 +12,7 @@ const ConnectionScreen = ({connectionHandler, passConnection}: Props) => () => {
         <div>
             <h1 className="text-2xl md:text-4xl italic">Aufbauen der Verbindung</h1>
             <p className="text-lg md:text-2xl mt-10">
-                Gas-o-meter kann automatisch den aktuelles Gasstand von modernen Gaszählern beziehen,
+                Gas-o-meter kann automatisch den aktuellen Gasstand von modernen Gaszählern beziehen,
                 sofern diese das sogenannte MQTT-Protokoll unterstützen. Lesen Sie das Handbuch Ihres Gaszählers, um zu erfahren,
                 ob Ihr Gaszähler das MQTT-Protokoll unterstützt. Falls der Gaszähler das Protokoll nicht unterstützt,
                 können Sie alternativ unser <em>GasReading-Kit</em> erwerben, welches das MQTT-Protokoll für Ihren Gaszähler
